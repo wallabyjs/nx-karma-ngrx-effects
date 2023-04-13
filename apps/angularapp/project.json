@@ -1,0 +1,92 @@
+{
+  "name": "angularapp",
+  "$schema": "../node_modules/nx/schemas/project-schema.json",
+  "projectType": "application",
+  "sourceRoot": "apps/angularapp/src",
+  "prefix": "my-nx-workspace",
+  "targets": {
+    "build": {
+      "executor": "@angular-devkit/build-angular:browser",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/apps/angularapp",
+        "index": "apps/angularapp/src/index.html",
+        "main": "apps/angularapp/src/main.ts",
+        "polyfills": ["zone.js"],
+        "tsConfig": "apps/angularapp/tsconfig.app.json",
+        "assets": [
+          "apps/angularapp/src/favicon.ico",
+          "apps/angularapp/src/assets"
+        ],
+        "styles": ["apps/angularapp/src/styles.css"],
+        "scripts": []
+      },
+      "configurations": {
+        "production": {
+          "budgets": [
+            {
+              "type": "initial",
+              "maximumWarning": "500kb",
+              "maximumError": "1mb"
+            },
+            {
+              "type": "anyComponentStyle",
+              "maximumWarning": "2kb",
+              "maximumError": "4kb"
+            }
+          ],
+          "outputHashing": "all"
+        },
+        "development": {
+          "buildOptimizer": false,
+          "optimization": false,
+          "vendorChunk": true,
+          "extractLicenses": false,
+          "sourceMap": true,
+          "namedChunks": true
+        }
+      },
+      "defaultConfiguration": "production"
+    },
+    "serve": {
+      "executor": "@angular-devkit/build-angular:dev-server",
+      "configurations": {
+        "production": {
+          "browserTarget": "angularapp:build:production"
+        },
+        "development": {
+          "browserTarget": "angularapp:build:development"
+        }
+      },
+      "defaultConfiguration": "development"
+    },
+    "extract-i18n": {
+      "executor": "@angular-devkit/build-angular:extract-i18n",
+      "options": {
+        "browserTarget": "angularapp:build"
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": [
+          "apps/angularapp/**/*.ts",
+          "apps/angularapp/**/*.html"
+        ]
+      }
+    },
+    "test": {
+      "executor": "@angular-devkit/build-angular:karma",
+      "options": {
+        "tsConfig": "apps/angularapp/tsconfig.spec.json",
+        "karmaConfig": "apps/angularapp/karma.conf.js",
+        "polyfills": ["zone.js", "zone.js/testing"],
+        "styles": [],
+        "scripts": [],
+        "assets": []
+      }
+    }
+  },
+  "tags": []
+}
